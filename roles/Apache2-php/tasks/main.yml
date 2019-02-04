@@ -1,7 +1,42 @@
 ---
-- name: Install Apache2 and other services
+- name: Install Apache2
   apt:
-    name: "{{ apache2,libapache2-mod-php7.0,php7.0,php7.0-pgsql,php7.0-xml,php7.0-mbstring,php7.0-gd,postgresql-client }}"
+    name: apache2
+    state: latest
+
+- name: Install Apache2-php7.0
+  apt:
+    name: libapache2-mod-php7.0
+    state: latest
+
+- name: Install PHP7.0
+  apt:
+    name: php7.0
+    state: latest
+
+- name: Install PHP7.0-pgsql
+  apt:
+    name: php7.0-pgsql
+    state: latest
+
+- name: Install PHP7.0-XML
+  apt:
+    name: php7.0-xml
+    state: latest
+
+- name: Install PHP7.0-mbstring
+  apt:
+    name: php7.0-mbstring
+    state: latest
+
+- name: Install PHP7.0-gd
+  apt:
+    name: php7.0-gd
+    state: latest
+
+- name: Install PostgreSQL-client
+  apt:
+    name: postgresql-client
     state: latest
 
 - name: Create a new virtual host
@@ -14,7 +49,7 @@
 
 - name: Enable virtual host
   file:
-    src: etc/apache2/sites-available/drupal.conf
+    src: /etc/apache2/sites-available/drupal.conf
     dest: /etc/apache2/sites-enabled/drupal.conf
     owner: root
     group: root

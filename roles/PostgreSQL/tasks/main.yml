@@ -21,7 +21,7 @@
   vars:
     ansible_ssh_pipelining: true
   postgresql_db:
-    name: "{{ db_name }}"
+    name: "drupal"
     encoding: UTF-8
 
 - name: Add Drupal user to database and grant privileges
@@ -30,11 +30,10 @@
   vars:
     ansible_ssh_pipelining: true
   postgresql_user:
-    db: "{{ db_name }}"
-    name: "{{ db_user }}"
-    password: "{{ db_passwd }}"
-    priv: "ALL"
-    expires: infinity
+    db: drupal
+    name: drupal
+    password: drupal
+    priv: ALL
 
 - name: Copy postgresql.conf
   copy:
