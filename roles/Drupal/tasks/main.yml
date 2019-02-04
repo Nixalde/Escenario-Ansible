@@ -1,0 +1,47 @@
+---
+- name: Download Drupal
+  unarchive:
+    src: https://www.drupal.org/download-latest/tar.gz
+    dest: /var/www/
+    remote_src: yes
+
+- name: Rename Drupal directory
+  shell: mv /var/www/drupal* /var/www/drupal
+
+- name: Create sites/default/files
+  file:
+    path: /var/www/drupal/sites/default/files
+    state: directory
+    owner: root
+    group: root
+    mode: 0666
+
+- name: Copy settings.php file
+  copy:
+    src: /var/www/drupal/sites/default/default.settings.php
+    dest: /var/www/drupal/sites/default/settings.php 
+    remote_src: yes
+    owner: root
+    group: root
+    mode: 0666
+
+- name: Download Drush
+  get_url:
+    url: https://github.com/drush-ops/drush/releases/download/8.1.18/drush.phar
+    dest: /usr/local/bin/drush
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Change working directory to /var/www/drupal
+  shell: cd /var/www/drupal
+
+- name: Install Drupal through Drush
+  shell: cd /var/www/drupal && drush site-install standard -y --site-name="Despliegue de Drupal" --account-name="admin" --account-pass="admin" --db-url=pgsql://admin:admin@10.0.1.101/drupal -y
+
+- name: Disable CSS and JS aggregation
+  shell: cd /var/www/drupal && drush -y config-set system.performance css.preprocess 0 && drush -y config-set system.performance js.preprocess 0
+  notify:
+    - restart apache2
+
+

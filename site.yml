@@ -1,0 +1,20 @@
+---
+- name: Install Drupal and Apache with mod-php on a machine and install PostgreSQL and Bind9 as DNS server on the other one.
+  hosts: all
+  become: yes
+  roles:
+    - common
+
+- hosts: nodo1
+  gather_facts: yes
+  become: yes
+  roles:
+    - PostgreSQL
+    - DNS-Bind9
+
+- hosts: nodo2
+  gather_facts: yes
+  become: yes
+  roles:
+    - Apache2-php
+    - Drupal

@@ -1,0 +1,5 @@
+---
+- name: Update target system
+  apt:
+    update_cache: yes
+    upgrade: yes

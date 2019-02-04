@@ -1,0 +1,39 @@
+---
+- name: Install Bind9
+  apt:
+    name: bind9
+    state: latest
+
+- name: Set up named.conf.local
+  copy:
+    src: etc/bind/named.conf.local
+    dest: /etc/bind/named.conf.local
+    owner: bind
+    group: bind
+    mode: 0644
+
+- name: Comment out the zone we'll use
+  copy:
+    src: etc/bind/zones.rfc1918
+    dest: /etc/bind/zones.rfc1918
+    owner: bind
+    group: bind
+    mode: 0644
+
+- name: Create zone file db.stage
+  copy:
+    src: var/cache/bind/db.stage
+    dest: /var/cache/bind/db.stage
+    owner: bind
+    group: bind
+    mode: 0644
+
+- name: Create zone file db.10.0
+  copy:
+    src: var/cache/bind/db.10.0
+    dest: /var/cache/bind/db.10.0
+    owner: bind
+    group: bind
+    mode: 0644
+  notify:
+- restart bind9
