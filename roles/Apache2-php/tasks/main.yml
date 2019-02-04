@@ -1,17 +1,8 @@
 ---
 - name: Install Apache2 and other services
   apt:
-    name: "{{ item }}"
+    name: "{{ apache2,libapache2-mod-php7.0,php7.0,php7.0-pgsql,php7.0-xml,php7.0-mbstring,php7.0-gd,postgresql-client }}"
     state: latest
-  loop:
-    - apache2
-    - libapache2-mod-php7.0
-    - php7.0
-    - php7.0-pgsql
-    - php7.0-xml
-    - php7.0-mbstring
-    - php7.0-gd
-    - postgresql-client
 
 - name: Create a new virtual host
   copy:
@@ -34,4 +25,4 @@
     path: /etc/apache2/sites-enabled/000-default.conf
     state: absent
   notify:
-- restart apache2
+    - restart apache2

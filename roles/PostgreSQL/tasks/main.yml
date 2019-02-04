@@ -1,12 +1,19 @@
 ---
+
 - name: Install PostgreSQL
   apt:
-    name: "{{ item }}"
+    name: postgresql
     state: latest
-  loop:
-    - postgresql
-    - postgresql-contrib
-    - python-psycopg2
+
+- name: Install PostgreSQL-contrib
+  apt:
+    name: postgresql-contrib
+    state: latest
+
+- name: Install Python-psycopg2
+  apt:
+    name: python-psycopg2
+    state: latest
 
 - name: Add Drupal database
   become: yes
@@ -45,4 +52,4 @@
     group: postgres
     mode: 0640
   notify:
-- restart postgresql
+    - restart postgresql
