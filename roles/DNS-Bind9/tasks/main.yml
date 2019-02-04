@@ -36,4 +36,4 @@
     group: bind
     mode: 0644
   notify:
-    - restart bind9
+    - Restart Bind9
