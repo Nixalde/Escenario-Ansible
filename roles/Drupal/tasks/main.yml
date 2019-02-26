@@ -6,7 +6,7 @@
     remote_src: yes
 
 - name: Rename Drupal directory
-  shell: mv /var/www/drupal* /var/www/drupal
+  shell: mv /var/www/drupal/* /var/www/drupal
 
 - name: Create sites/default/files
   file:
